@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turkish Aviation Industry History Matrix</title>
+    <link href="https://fonts.googleapis.com/css2?family=B612+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .connection-line {
+            position: absolute;
+            width: 2px;
+            background-color: black;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid black;
+            padding: 10px;
+            z-index: 150;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        /* Add specific styles for positioning lines and popups */
+        /* Example: */
+        #line1 { /* Positioning for Turkish Aeronautical Association */
+            top: 100px;
+            left: 200px;
+            height: 50px;
+        }
+
+        .search-container {
+            position: relative;
+            z-index: 100;
+        }
+
+        .legend {
+            position: relative;
+            z-index: 50;
+            margin-top: 60px;
+        }
+
+        .search-input:hover {
+            color: #bfb400;
+            cursor: none;
+        }
+
+        .search-input:hover::placeholder {
+            color: #bfb400;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        Turkish Aviation<br>
+        Industry History Matrix
+        <img src="./assets/wip-badge.svg" alt="Work in Progress" class="wip-badge">
+    </div>
+<!-- Info butonu -->
+<button class="info-button">info</button>
+
+    <div class="legend">
+        <div class="legend-item">
+            <img class="legend-icon" alt="" src="assets/ppl.svg">
+            <div class="legend-text people">People</div>
+        </div>
+        <div class="legend-item">
+            <img class="legend-icon" alt="" src="assets/prjct.svg">
+            <div class="legend-text project">Project</div>
+        </div>
+        <div class="legend-item">
+            <img class="legend-icon" alt="" src="assets/inst.svg">
+            <div class="legend-text institution">Institution</div>
+        </div>
+    </div>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search">
+        <img src="assets/chevron.svg" alt="Chevron" class="chevron-icon">
+        <div class="search-results"></div>
+    </div>
+    <canvas id="animationCanvas"></canvas>
+    <div id="icons-container">
+        <!-- Existing icons... -->
+        
+        <!-- Add İsmet İnönü icon with label -->
+        <div id="ismetIcon" class="icon" style="position: absolute; top: 300px; left: 400px;" onclick="showPopup('popupIsmet')">
+            İsmet İnönü
+            <span class="icon-label" id="labelIsmet" style="display: none;">İsmet İnönü</span>
+        </div>
+    </div>
+    <script src="data/data.js"></script>
+    <script src="data/connections.js"></script>
+    <script src="script.js"></script>
+    <!-- Connection lines -->
+    <div id="line1" class="connection-line" onclick="showPopup('popup1')"></div>
+    <!-- Connection lines for İsmet İnönü -->
+    <div id="lineIsmet" class="connection-line" onclick="showPopup('popupIsmet')"></div>
+    <!-- Pop-ups -->
+    <div id="popup1" class="popup">Turkish Aeronautical Association</div>
+    <div id="popupIsmet" class="popup">İsmet İnönü Connection</div>
+<!-- Info popup -->
+<div id="infoPopup" class="popup-overlay">
+    <div class="popup-content">
+      <button class="popup-close" onclick="closeInfoPopup()">&times;</button>
+      <div class="popup-header">
+        <h1 class="popup-title">Turkish Aviation Industry History Matrix</h1>
+        <!-- <span class="popup-year">2024</span> -->
+      </div>
+      <div class="popup-body">
+        <p style="font-size: 14px;">Turkish Aviation Industry History Matrix is a project made by Ahmet Serdar Karakurt within the VCDS4111 Advanced Visual Communication Design class with the mentorship of Prof.Dilek Kaya and Prof.Hakan Ertep.</p> 
+
+        It aims to reveal the connections between people, institutions and projects that have shaped the history of the aviation industry in Türkiye. 
+
+        <!-- <p>Content and links may be missing. This is an ongoing project and new information and links will be added.</p> -->
+        
+        <p style="font-size: 14px;">This is a work in progress. Needs code optimisations, design revisions and content enrichment.</p>
+
+        <p style="font-size: 14px;">Any suggestions and comments are welcome in terms of design and content. Please contact me via <a href="https://aserdark.com" style="color: #1fc2c2; cursor: url('cursorv2.svg'), auto">aserdark.com</a> or <a href="mailto:askarakurt7@gmail.com" style="color: #1fc2c2; cursor: url('cursorv2.svg'), auto">askarakurt7@gmail.com</a> , if you have any suggestions and comments. </p>
+        
+        Design has been made by Ahmet Serdar Karakurt and all content has been provided by the following sources;
+        
+        <h3>Books</h3>
+        <ul>
+          <li>Bir Tayyarecinin Anıları - Vecihi Hürkuş - Yapı Kredi Kültür Yayınları</li>
+          <li>Doğuşu ve Gelişimi: Türk Havacılık Tarihi - Deniz Dalkılınç, İstanbul Büyükşehir Belediyesi Yayınları</li>
+          <li>Gökteki Venüs - M. Bahattin Adıgüzel, Türk Hava Kurumu Kültür Yayınları</li>
+          <li>Hayalden Gerçeğe - TUSAŞ Yayınları</li>
+          <li>Mustafa Kemal'in Uçakları - İsmail Yavuz, İş Bankası Kültür Yayınları</li>
+          <li>Nuri Demirağ - Fatih M. Dervişoğlu, Ötüken Neşriyat</li>
+          <li>Teşebbüs Hürriyeti - Şükrü Er - MESS Yayınları</li>
+          <li>Türk Hava Harp Sanayii Tarihi - Osman Yalçın - İş Bankası Kültür Yayınları</li>
+          <li>Türk Havacılığında İlkler - Sinemis Oğuz, Uluslararası İlişkiler Kütüphanesi</li>
+          <li>Türk Havacılığına İz Bırakanlar - M. Bahattin Adıgüzel, Sonçağ Kültür Yayınları</li>
+        </ul>
+        
+        <h3>Online Resources</h3>
+        <ul>
+          <li><a href="https://www.airbus.com">airbus.com</a></li>
+          <li><a href="https://www.airforce-technology.com">airforce-technology.com</a></li>
+          <li><a href="https://www.airnewstimes.com">airnewstimes.com</a></li>
+          <li><a href="https://www.alp.com.tr">alp.com.tr</a></li>
+          <li><a href="https://www.aselsan.com">aselsan.com</a></li>
+          <li><a href="https://www.aviationturkey.com">aviationturkey.com</a></li>
+          <li><a href="https://www.aviationweek.com">aviationweek.com</a></li>
+          <li><a href="https://www.baykartech.com">baykartech.com</a></li>
+          <li><a href="https://www.defenceturkey.com">defenceturkey.com</a></li>
+          <li><a href="https://www.havelsan.com">havelsan.com</a></li>
+          <li><a href="https://www.invest.gov.tr">invest.gov.tr</a></li>
+          <li><a href="https://news.lockheedmartin.com">news.lockheedmartin.com</a></li>
+          <li><a href="https://www.nuridemirag.com">nuridemirag.com</a></li>
+          <li><a href="https://www.tusas.com">tusas.com</a></li>
+          <li><a href="https://www.turdef.com">turdef.com</a></li>
+        </ul>
+
+        <h3></h3>January 2025</h3>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+    <script>
+        function showPopup(popupId) {
+            // Hide all popups
+            document.querySelectorAll('.popup').forEach(popup => popup.classList.remove('active'));
+
+            // Show the selected popup
+            document.getElementById(popupId).classList.add('active');
+        }
+
+        // Info popup functions
+        function showInfoPopup() {
+            document.getElementById('infoPopup').classList.add('show');
+        }
+
+        function closeInfoPopup() {
+            document.getElementById('infoPopup').classList.remove('show');
+        }
+
+        // Add click event listener to info button
+        document.querySelector('.info-button').addEventListener('click', showInfoPopup);
+    </script>
+</body>
+</html>

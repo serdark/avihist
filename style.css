@@ -1,0 +1,861 @@
+* {
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+@font-face {
+    font-family: 'B612';
+    src: local('B612'),
+         url('./fonts/B612-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+00C7, U+00E7, U+011E, U+011F, U+0130, U+0131, U+015E, U+015F;
+}
+
+@font-face {
+    font-family: 'B612 Mono';
+    src: local('B612 Mono'),
+         url('./fonts/B612Mono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+00C7, U+00E7, U+011E, U+011F, U+0130, U+0131, U+015E, U+015F;
+}
+
+/* Add specific rule for Turkish characters */
+*:lang(tr), [lang="tr"] {
+    font-family: 'B612', sans-serif !important;
+}
+
+/* Ensure consistent font rendering for specific Turkish characters */
+*::first-letter,
+*[data-content^="Ş"],
+*[data-content^="ş"],
+*[data-content^="İ"],
+*[data-content^="ı"],
+*[data-content^="Ğ"],
+*[data-content^="ğ"],
+*[data-content^="Ç"],
+*[data-content^="ç"] {
+    font-family: 'B612', sans-serif !important;
+}
+
+body {
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.title {
+    position: fixed;
+    top: 25px;
+    left: 40px;
+    color: #ffffff;
+    font-family: 'B612', sans-serif;
+    font-size: 24px;
+    line-height: 1.5;
+    text-transform: capitalize;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.wip-badge {
+    width: 80px;
+    height: auto;
+    margin-left: -65px;
+    margin-top: 5px;
+    transform: rotate(25deg);
+    transition: all 0.3s ease;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+.wip-badge:hover {
+    transform: rotate(25deg) scale(1.1);
+    cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+.title:hover .wip-badge {
+    cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+.info-button {
+    position: fixed;
+    top: 100px;
+    left: 40px;
+    color: #ffffff;
+    font-family: 'B612', sans-serif;
+    font-size: 14px;
+    text-decoration: underline;
+    /* Important: Raise z-index above 9999 */
+    z-index: 10000; 
+    background: none;
+    border: none;
+    padding: 0;
+    transition: color 0.3s ease;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+.info-button:hover {
+    color: #bfb400;
+    cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+
+
+#icons-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.icon-wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.icon-wrapper:hover {
+    transform: scale(1.1);
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+.icon {
+    width: 35px;
+    height: 35px;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+.icon-name {
+    font-family: 'B612', sans-serif;
+    color: white;
+    text-align: center;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 12px;
+    max-width: 150px;
+}
+
+.icon-wrapper:hover .icon-name,
+.icon-wrapper.connected .icon-name {
+    opacity: 1;
+}
+
+.icon-wrapper.highlighted .icon-name {
+    opacity: 1;
+}
+
+.search-container {
+    position: fixed !important;
+    top: 25px !important;
+    right: 40px !important;
+    z-index: 9999 !important;
+    width: 350px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.9);
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+
+.search-container:hover {
+cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+.search-container:hover .search-input,
+.search-container:hover .chevron-icon {
+    color: #bfb400;
+cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+.search-input {
+    flex: 1;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: 'B612', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input:hover {
+    color: #bfb400;
+cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+.search-input:focus {
+    color: #bfb400;
+    border-bottom-color: #bfb400;
+}
+
+.search-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #646464;
+    transition: background-color 0.3s ease;
+}
+
+.search-container:hover::after {
+    background-color: #bfb400;
+    height: 2px;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    z-index: 7;
+    max-height: calc(6 * (13px + 12px));
+    min-height: calc(1 * (13px + 12px));
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #646464;
+    display: none;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #646464 rgba(0, 0, 0, 0.3);
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-item {
+    padding: 6px 12px;
+    color: white;
+    font-family: 'B612', sans-serif;
+    font-size: 13px;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.search-item:hover {
+    background-color: rgba(100, 100, 100, 0.3);
+    color: #bfb400;
+}
+
+/* Scrollbar styles for search results */
+.search-results::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background-color: #646464;
+    border-radius: 4px;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+}
+
+.icon-wrapper.dimmed {
+    opacity: 0.3;
+}
+
+.icon-wrapper.highlighted {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.dropdown-search {
+    padding: 12px 16px;
+    border-bottom: 1px solid #646464;
+    position: sticky;
+    top: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1;
+}
+
+.dropdown-search input {
+    width: 100%;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid #646464;
+    color: white;
+    font-family: 'B612', sans-serif;
+    font-size: 14px;
+    outline: none;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+.dropdown-search input:focus {
+    border-color: #888;
+}
+
+.dropdown-section.hidden {
+    display: none;
+}
+
+.dropdown-item.hidden {
+    display: none;
+}
+
+/* For Webkit browsers (Chrome, Safari, etc.) */
+.dropdown-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+    background-color: #646464;
+    border-radius: 4px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+}
+
+/* Add these styles for the pop-up */
+.popup-overlay {
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 99999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.popup-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.popup-content {
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+    position: relative;
+    width: 50%;
+    max-width: 700px;
+    margin: auto;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid #BFB400;
+    padding: 32px;
+    color: white;
+    font-family: 'B612', sans-serif;
+    z-index: 100000;
+}
+
+.popup-header {
+    margin-bottom: 24px;
+    padding-right: 40px;
+}
+
+.popup-header p:nth-of-type(0) {
+    text-indent: 2em;
+}
+
+.popup-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    color: white;
+}
+
+.popup-year {
+    font-size: 16px;
+    color: #ffffff;
+    margin-bottom: 1px;
+    display: block;
+    margin-top: 0px;
+    /* padding-left: 20px; */
+}
+
+.popup-date {
+    font-size: 20px;
+    color: #1fc2c2;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.popup-description {
+    font-size: 180px;
+    line-height: 1.5;
+    margin-top: 0;
+    color: white;
+}
+
+.popup-category {
+    color: #646464;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.popup-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 32px;
+    height: 32px;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+    background: transparent;
+    border: none;
+    color: #646464;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.popup-close:hover {
+    transform: scale(1.5);
+    color: #BFB400;
+cursor: url('./assets/cursorv2.svg') 10 10, auto !important; /* completely hides cursor */
+    animation: cursorTransition 0.3s ;
+}
+
+
+.popup-body {
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+    line-height: 1.6;
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    padding-right: 16px;
+    margin: 0 -16px;
+    padding: 0 16px;
+    font-size: 14px;
+    font-family: 'B612', sans-serif;
+}
+
+.popup-section {
+    margin-bottom: 24px;
+}
+
+.popup-section-title {
+    color: #646464;
+    margin-bottom: 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+/* Style scrollbars */
+.popup-body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.popup-body::-webkit-scrollbar-track {
+    background: #000;
+}
+
+.popup-body::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.popup-body::-webkit-scrollbar-thumb:hover {
+    background-color: #BFB400;
+}
+
+/* Add styles for text formatting */
+.popup-body p {
+    margin-bottom: 1px;
+    white-space: pre-line;
+    font-size: 16px;
+    line-height: 1.4;
+    font-family: 'B612', sans-serif;
+}
+
+.popup-body p:nth-of-type(2) {
+    text-indent: 2em;
+}
+
+.popup-body br {
+    display: block;
+    margin: 1px 0;
+}
+
+.chevron-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    transition: all 0.5s ease;
+    filter: invert(40%) sepia(0%) saturate(1%) hue-rotate(231deg) brightness(92%) contrast(78%);
+}
+
+.chevron-icon:hover {
+    transform: scale(1.1);
+    filter: invert(76%) sepia(39%) saturate(1011%) hue-rotate(359deg) brightness(97%) contrast(103%);
+cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+    animation: cursorTransition 0.6s ease-in-out;
+}
+
+
+@keyframes cursorTransition {
+    0% {
+        cursor: url('./assets/cursor.svg') 25 15, auto !important;
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+        transform: scale(1.1);
+    }
+}
+
+.connection-line {
+    position: fixed;
+    pointer-events: auto;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+    transition: all 0.3s ease;
+    height: 1px !important;
+    z-index: 5 !important;
+    transform-origin: left center;
+    padding: 2px 0;
+    margin: -10px 0;
+    border-top: 3px dashed #3CDE00;
+    border-style: dashed;
+    background-color: transparent !important;
+}
+
+.connection-line:hover {
+    opacity: 1;
+    border-top: 3px solid #3CDE00 !important;
+    cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+.italic {
+    font-family: 'B612', sans-serif;
+    font-style: italic;
+}
+
+.icon-label {
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    padding: 2px 5px;
+    display: none; /* Initially hidden */
+    z-index: 20;
+    font-family: 'B612', sans-serif;
+}
+
+.icon-large {
+    width: 60px;
+    height: 60px;
+}
+
+.icon-small {
+    width: 30px;
+    height: 30px;
+}
+
+/* Individual icon sizes */
+/* People */
+.icon-vecihi {
+    width: 49px;
+    height: 49px;
+}
+
+.icon-nuri {
+    width: 49px;
+    height: 49px;
+}
+
+.icon-ismet {
+    width: 17.5px;
+    height: 17.5px;
+}
+
+.icon-ataturk {
+    width: 24.5px;
+    height: 24.5px;
+}
+
+.icon-fevzi {
+    width: 17.5px;
+    height: 17.5px;
+}
+
+.icon-hami {
+    width: 31.5px;
+    height: 31.5px;
+}
+
+.icon-mansur {
+    width: 31.5px;
+    height: 31.5px;
+}
+
+.icon-mehmet {
+    width: 31.5px;
+    height: 31.5px;
+}
+
+.icon-omer {
+    width: 17.5px;
+    height: 17.5px;
+}
+
+.icon-selahattin {
+    width: 35px;
+    height: 35px;
+}
+
+.icon-emrullah {
+    width: 38.5px;
+    height: 38.5px;
+}
+
+/* Institutions */
+.icon-thk {
+    width: 28px;
+    height: 28px;
+}
+
+.icon-factory {
+    width: 31.5px;
+    height: 31.5px;
+}
+
+.icon-tusas {
+    width: 36.4px;
+    height: 36.4px;
+}
+
+.icon-itu {
+    width: 24.5px;
+    height: 24.5px;
+}
+
+.icon-tubitak {
+    width: 33.6px;
+    height: 33.6px;
+}
+
+.icon-airforce {
+    width: 38.5px;
+    height: 38.5px;
+}
+
+/* Foreign Institutions */
+.icon-ava, .icon-curtiss, .icon-dehavilland, .icon-gotha, .icon-junkers, .icon-pzl, .icon-philips {
+    width: 31.5px;
+    height: 31.5px;
+}
+
+/* Projects */
+.icon-nud {
+    width: 29.4px;
+    height: 29.4px;
+}
+
+.icon-thk-project {
+    width: 28px;
+    height: 28px;
+}
+
+.icon-vecihi-project {
+    width: 29.4px;
+    height: 29.4px;
+}
+
+.icon-newtype {
+    width: 35px;
+    height: 35px;
+}
+
+/* Legend */
+
+.legend {
+    position: fixed !important;
+    top: 0px !important;
+    right: 25px !important;
+    z-index: 9999 !important;
+    font-family: 'B612', sans-serif;
+    display: flex;
+    gap: 40px;
+    background-color: rgba(0, 0, 0, 0,);
+    padding: 15px;
+    pointer-events: auto;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+}
+
+.legend-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.legend-text {
+    font-size: 15px;
+    font-family: 'B612', sans-serif;
+    font-weight: 200;
+}
+
+.legend-text.people {
+    color: #FF2800;
+}
+
+.legend-text.institution {
+    color: #CB24B8;
+}
+
+.legend-text.project {
+    color: #1fc2c2;
+}
+
+/* Legend */
+
+.icon-highlighted {
+    opacity: 1;
+    transform: scale(1.1);
+    transition: transform 0.1s ease, opacity 0.1s ease;
+}
+
+.icon-dimmed {
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
+}
+
+/* Update all interactive elements to use the custom cursor */
+.icon-wrapper,
+.icon,
+.search-input,
+.search-item,
+.popup-overlay,
+.popup-content,
+.popup-close,
+.popup-body,
+.connection-line,
+.dropdown-search input,
+.chevron-icon {
+    cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+}
+
+/* Modern Companies */
+.icon-tusas, .icon-tei, .icon-tci, .icon-baykar {
+    width: 45px;
+    height: 45px;
+}
+
+.icon-aselsan, .icon-alp {
+    width: 40px;
+    height: 40px;
+}
+
+/* International Companies */
+.icon-airbus, .icon-sikorsky, .icon-lockheed, .icon-boeing, .icon-atr {
+    width: 35px;
+    height: 35px;
+}
+
+/* Modern Projects */
+.icon-hurkus, .icon-hurjet, .icon-kaan, .icon-anka, .icon-akinci,
+.icon-aksungur, .icon-gokbey, .icon-atak, .icon-t70 {
+    width: 42px;
+    height: 42px;
+}
+
+.icon-bayraktar {
+    width: 44px;
+    height: 44px;
+}
+
+/* Modern People */
+.icon-selcuk, .icon-haluk {
+    width: 40px;
+    height: 40px;
+}
+
+/* Info popup specific styles */
+#infoPopup.popup-overlay {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#infoPopup.popup-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+#infoPopup .popup-body p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    text-indent: 0;
+}
+
+#infoPopup .popup-body p + p {
+    text-indent: 0;
+}
+
+#infoPopup .popup-content {
+    max-width: 700px;
+}
+
+.popup-body ul li a {
+    color: #1fc2c2;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+.popup-body ul li a:hover {
+    color: #1fc2c2;
+    text-decoration: underline;
+    cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+    animation: cursorTransition 0.3s ease;
+}
+
+.popup-body a {
+    color: #1fc2c2;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+    cursor: url('./assets/cursor.svg') 25 15, auto !important;
+}
+
+.popup-body a:hover {
+    color: #1fc2c2;
+    text-decoration: underline;
+    cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
+    animation: cursorTransition 0.3s ease;
+}
+
+#infoPopup .popup-body {
+    margin-top: 24px;
+}

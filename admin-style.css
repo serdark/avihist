@@ -1,0 +1,125 @@
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: #000;
+    color: white;
+    font-family: 'B612', sans-serif;
+    min-height: 100vh;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 32px;
+}
+
+h1 {
+    color: white;
+    margin-bottom: 24px;
+}
+
+.category-filters {
+    margin-bottom: 24px;
+}
+
+.filter-btn {
+    background: transparent;
+    color: white;
+    border: 1px solid #646464;
+    padding: 8px 16px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-family: 'B612', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(100, 100, 100, 0.3);
+}
+
+.filter-btn.active {
+    background: #646464;
+}
+
+.item-card {
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid #646464;
+    padding: 24px;
+    margin-bottom: 24px;
+    border-radius: 4px;
+}
+
+.item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.item-title {
+    font-size: 18px;
+    color: white;
+}
+
+.item-category {
+    color: #646464;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-label {
+    display: block;
+    color: #646464;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+textarea, input[type="text"] {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #646464;
+    padding: 12px;
+    color: white;
+    font-family: 'B612', sans-serif;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+input[type="text"] {
+    min-height: auto;
+}
+
+.save-btn {
+    background: #646464;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    cursor: pointer;
+    font-family: 'B612', sans-serif;
+    transition: background 0.3s ease;
+}
+
+.save-btn:hover {
+    background: #888;
+}
+
+.success-message {
+    color: #4CAF50;
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.success-message.show {
+    opacity: 1;
+} 

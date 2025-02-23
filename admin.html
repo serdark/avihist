@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Vecihi Hürkuş Connections</title>
+    <link href="https://fonts.googleapis.com/css2?family=B612+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <style>
+        .connection-line {
+            position: absolute;
+            width: 2px;
+            background-color: black;
+        }
+
+        .popup {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid black;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        #line1 {
+            top: 100px;
+            left: 200px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header>
+            <h1>Edit Item Details</h1>
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="institution">Institutions</button>
+                <button class="filter-btn" data-category="person">People</button>
+                <button class="filter-btn" data-category="project">Projects</button>
+            </div>
+        </header>
+        <main id="items-container">
+            <!-- Add İsmet İnönü icon -->
+            <div id="ismetIcon" class="icon" style="position: absolute; top: 300px; left: 400px;" onclick="showPopup('popupIsmet')">
+                İsmet İnönü
+            </div>
+        </main>
+    </div>
+    <!-- Connection lines -->
+    <div id="line1" class="connection-line" onclick="showPopup('popup1')"></div>
+    <!-- Connection lines for İsmet İnönü -->
+    <div id="lineIsmet" class="connection-line" onclick="showPopup('popupIsmet')"></div>
+    <!-- Pop-ups -->
+    <div id="popup1" class="popup">Turkish Aeronautical Association</div>
+    <div id="popupIsmet" class="popup">İsmet İnönü Connection</div>
+    <script src="admin.js"></script>
+    <script>
+        function showPopup(popupId) {
+            // Hide all popups
+            document.querySelectorAll('.popup').forEach(popup => popup.classList.remove('active'));
+
+            // Show the selected popup
+            document.getElementById(popupId).classList.add('active');
+        }
+
+        // Add more JavaScript if needed for additional functionality
+    </script>
+</body>
+</html> 
