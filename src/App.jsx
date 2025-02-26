@@ -25,8 +25,9 @@ function App() {
   }
 
   return (
-    // ... your existing app content ...
+    <div>
+      <h1>Welcome to the App!</h1>
+      {/* Add your existing app content here */}
+    </div>
   );
 }
-
-export default App; 
