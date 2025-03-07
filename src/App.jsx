@@ -6,17 +6,13 @@ function App() {
 
   React.useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+      setIsMobile(isMobileDevice);
     };
 
     // Check on initial load
     checkMobile();
-
-    // Add event listener for window resize
-    window.addEventListener('resize', checkMobile);
-
-    // Cleanup
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Show mobile message if on mobile device
@@ -31,3 +27,5 @@ function App() {
     </div>
   );
 }
+
+export default App;

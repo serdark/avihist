@@ -736,7 +736,7 @@ cursor: url('./assets/cursorv2.svg') 10 10, auto !important;
 }
 
 .legend-text.project {
-    color: #1fc2c2;
+    color: rgb(31, 194, 194);
 }
 
 /* Legend */
