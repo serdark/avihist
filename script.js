@@ -106,7 +106,6 @@ const projects = [
     "Vecihi XIV"
 ];
 
-
 // const itemDetails = {
 //     // Institutions
 //     "Aerodynamische Versuchsanstalt (AVA)": {
@@ -206,20 +205,21 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Draw arcs function
+// Update the drawArcs function to add year labels on both sides
 function drawArcs() {
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     const centerX = canvas.width / 2;
     const centerY = canvas.height;
-    
+    // Update the arc definitions with more precise positioning
     const arcs = [
-        { radius: canvas.width * 0.09, segments: 20, lineWidth: 3.5, angleOffset: Math.PI * 0.025 },
-        { radius: canvas.width * 0.18, segments: 30, lineWidth: 3.5, angleOffset: Math.PI * 0.017, year: "1900" },
-        { radius: canvas.width * 0.31, segments: 50, lineWidth: 3.5, angleOffset: Math.PI * 0.009,  year: "1925" },
-        { radius: canvas.width * 0.44, segments: 70, lineWidth: 3.5, angleOffset: Math.PI * 0.007, year: "1950" },
-        { radius: canvas.width * 0.57, segments: 90, lineWidth: 3.5, angleOffset: Math.PI * 0.025, year: "1975" },
-        { radius: canvas.width * 0.7, segments: 110, lineWidth: 3.5, angleOffset: Math.PI * 0.025, year: "2000" }
+        { radius: canvas.width * 0.000, segments: 20, lineWidth: 3.5, angleOffset: Math.PI * 0.015, year: "1900" },
+        { radius: canvas.width * 0.09, segments: 20, lineWidth: 3.5, angleOffset: Math.PI * 0.015, year: "1925" },
+        { radius: canvas.width * 0.18, segments: 30, lineWidth: 3.5, angleOffset: Math.PI * 0.012, year: "1950" },
+        { radius: canvas.width * 0.31, segments: 50, lineWidth: 3.5, angleOffset: Math.PI * 0.008, year: "1975" },
+        { radius: canvas.width * 0.44, segments: 70, lineWidth: 3.5, angleOffset: Math.PI * 0.006, year: "2000" },
+        { radius: canvas.width * 0.57, segments: 90, lineWidth: 3.5, angleOffset: Math.PI * 0.004, year: "2025" }
     ];
 
     // Draw the arcs
@@ -230,81 +230,80 @@ function drawArcs() {
     arcs.forEach(arc => {
         ctx.beginPath();
         ctx.lineWidth = arc.lineWidth;
-        
+
         for (let i = 0; i <= arc.segments; i++) {
             const angle = (Math.PI * i) / arc.segments - Math.PI + (arc.angleOffset || 0);
             const x = centerX + Math.cos(angle) * arc.radius;
             const y = centerY + Math.sin(angle) * arc.radius;
-            
-            if (i % 2 === 0) {
+
+            if (i === 0) {
                 ctx.moveTo(x, y);
             } else {
                 ctx.lineTo(x, y);
             }
         }
         ctx.stroke();
-    });
-    
-    ctx.setLineDash([]); // Reset line dash
 
-    // // Draw the year labels
-    // ctx.font = '18px B612';
-    // ctx.fillStyle = '#1FC2C2';
-    // ctx.textAlign = 'top';
-    // ctx.textBaseline = 'middle';
+        if (arc.radius > 0) {
+            ctx.font = '16px B612';
+            ctx.fillStyle = '#1FC2C2';
+            ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
 
-    arcs.forEach(arc => {
-        // Only draw year labels if the arc has a year property
-        if (arc.year) {
-            // Calculate positions for left and right year labels
-            const leftAngle = -Math.PI + (arc.angleOffset || 0);
-            const rightAngle = 0 + (arc.angleOffset || 0);
+            // Increase vertical offset for more space
+            const verticalOffset = 25; // Changed from 20 to 40
 
-            // Adjust offset based on the year
-            let radiusOffset = 80;
-            if (arc.year === "2000") {
-                radiusOffset = 2500; // Increased significantly to move it inward
-            } else if (arc.year === "1975") {
-                radiusOffset = 180; // Increased to move it inward
+            if (arc.year !== "1900") {
+                // Left label
+                const leftLabelX = centerX + Math.cos(-Math.PI) * arc.radius;
+                const leftLabelY = centerY + Math.sin(-Math.PI) * arc.radius - verticalOffset;
+
+                // Save current context state
+                ctx.save();
+                // Rotate text for left label
+                ctx.translate(leftLabelX - 10, leftLabelY);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText(arc.year, 0, 0);
+                // Restore context state
+                ctx.restore();
+
+                // Right label
+                const rightLabelX = centerX + Math.cos(0) * arc.radius;
+                const rightLabelY = centerY + Math.sin(0) * arc.radius - verticalOffset;
+
+                // Save current context state
+                ctx.save();
+                // Rotate text for right label
+                ctx.translate(rightLabelX + 10, rightLabelY);
+                ctx.rotate(Math.PI / 2);
+                ctx.fillText(arc.year, 0, 0);
+                // Restore context state
+                ctx.restore();
+            } else {
+                const leftLabelX = centerX + Math.cos(-Math.PI) * arc.radius;
+                const leftLabelY = centerY + Math.sin(-Math.PI) * arc.radius - verticalOffset;
+
+                // Save current context state
+                ctx.save();
+                // Rotate text for center label
+                ctx.translate(leftLabelX, leftLabelY);
+                ctx.rotate(-Math.PI / 2);
+                ctx.fillText(arc.year, 0, 0);
+                // Restore context state
+                ctx.restore();
             }
-
-            // Left year position with adjusted offset
-            const leftX = centerX + Math.cos(leftAngle) * (arc.radius - radiusOffset);
-            const leftY = centerY + Math.sin(leftAngle) * (arc.radius - radiusOffset);
-
-            // Right year position with adjusted offset
-            const rightX = centerX + Math.cos(rightAngle) * (arc.radius - radiusOffset);
-            const rightY = centerY + Math.sin(rightAngle) * (arc.radius - radiusOffset);
-
-            // Save current context
-            ctx.save();
-            
-            // Draw left year label vertically
-            ctx.translate(leftX - 50, leftY);
-            ctx.rotate(-Math.PI/2);
-            ctx.fillText(arc.year, 0, 0);
-            
-            // Restore and save again for right label
-            ctx.restore();
-            ctx.save();
-            
-            // Draw right year label vertically
-            ctx.translate(rightX + 50, rightY);
-            ctx.rotate(-Math.PI/2);
-            ctx.fillText(arc.year, 0, 0);
-            
-            // Restore context
-            ctx.restore();
         }
     });
+
+    ctx.setLineDash([]); // Reset line dash
 }
 
 // Add a function to check if two rectangles overlap
 function doRectanglesOverlap(rect1, rect2) {
-    return !(rect1.right < rect2.left || 
-             rect1.left > rect2.right || 
-             rect1.bottom < rect2.top || 
-             rect1.top > rect2.bottom);
+    return !(rect1.right < rect2.left ||
+        rect1.left > rect2.right ||
+        rect1.bottom < rect2.top ||
+        rect1.top > rect2.bottom);
 }
 
 // Function to get rectangle for the title
@@ -333,54 +332,274 @@ function isPositionValid(newRect, existingRects) {
     return true;
 }
 
-function getRandomPosition(maxWidth, maxHeight, iconWidth, iconHeight, existingRects) {
-    const padding = 100;
-    const maxAttempts = 100;
+// Update the arc segments definition for better precision
+const arcSegments = [
+    { startYear: 1900, endYear: 1925, innerRadius: 0.001, outerRadius: 0.09 },
+    { startYear: 1925, endYear: 1950, innerRadius: 0.09, outerRadius: 0.18 },
+    { startYear: 1950, endYear: 1975, innerRadius: 0.18, outerRadius: 0.31 },
+    { startYear: 1975, endYear: 2000, innerRadius: 0.31, outerRadius: 0.44 },
+    { startYear: 2000, endYear: 2025, innerRadius: 0.44, outerRadius: 0.57 }
+];
+
+// Update helper function to determine which arc segment an item belongs to
+function getItemSegment(item) {
+    // Extract year from itemTexts
+    const text = itemTexts[item];
+    let year = null;
+
+    if (text) {
+        // Try to extract year from popup-year span
+        const yearMatch = text.match(/<span class="popup-year">(\d{4})/);
+        if (yearMatch) {
+            year = parseInt(yearMatch[1]);
+        } else {
+            // Try to find any 4-digit year in the text
+            const yearInText = text.match(/\b(18|19|20)\d{2}\b/);
+            if (yearInText) {
+                year = parseInt(yearInText[0]);
+            }
+        }
+    }
+
+    // If no year found, place in the most recent segment
+    if (!year) {
+        return arcSegments[arcSegments.length - 1];
+    }
+
+    // Handle edge cases first
+    if (year < arcSegments[0].startYear) {
+        return arcSegments[0];
+    }
+
+    if (year > arcSegments[arcSegments.length - 1].endYear) {
+        return arcSegments[arcSegments.length - 1];
+    }
+
+    // Find the exact segment for the year
+    for (const segment of arcSegments) {
+        if (year >= segment.startYear && year <= segment.endYear) {
+            // Calculate the position within the segment
+            const segmentProgress = (year - segment.startYear) / (segment.endYear - segment.startYear);
+            const radiusRange = segment.outerRadius - segment.innerRadius;
+            const adjustedRadius = segment.innerRadius + (radiusRange * segmentProgress);
+
+            return {
+                ...segment,
+                innerRadius: adjustedRadius - (radiusRange * 0.1),
+                outerRadius: adjustedRadius + (radiusRange * 0.1)
+            };
+        }
+    }
+
+    // Eğer buraya kadar geldiyse, en yakın segmente yerleştir
+    for (let i = 0; i < arcSegments.length - 1; i++) {
+        if (year > arcSegments[i].endYear && year < arcSegments[i + 1].startYear) {
+            // Hangi segmente daha yakınsa ona yerleştir
+            const distToCurrentEnd = Math.abs(year - arcSegments[i].endYear);
+            const distToNextStart = Math.abs(year - arcSegments[i + 1].startYear);
+            return distToCurrentEnd < distToNextStart ? arcSegments[i] : arcSegments[i + 1];
+        }
+    }
+
+    // Son çare olarak en son segmente yerleştir
+    return arcSegments[arcSegments.length - 1];
+}
+
+// Update distributeIcons to handle all items together
+function distributeIcons() {
+    const existingRects = [];
+    const container = document.getElementById('icons-container') || document.body;
+    container.innerHTML = ''; // Clear existing icons
+
+    // Combine all items and sort by year
+    const allItems = [
+        ...institutions.map(item => ({ name: item, type: 'institution' })),
+        ...people.map(item => ({ name: item, type: 'person' })),
+        ...projects.map(item => ({ name: item, type: 'project' }))
+    ];
+
+    // Sort items by their years (extracted from itemTexts)
+    allItems.sort((a, b) => {
+        const yearA = getItemSegment(a.name).startYear;
+        const yearB = getItemSegment(b.name).startYear;
+        return yearA - yearB;
+    });
+
+    // Create icons for all items
+    allItems.forEach(({ name, type }) => {
+        const segment = getItemSegment(name);
+        const icon = createIcon(name, type, existingRects, segment);
+        if (icon) container.appendChild(icon);
+    });
+}
+
+// Update getRandomPositionInArc function to prevent icons from going below screen
+function getRandomPositionInArc(segment, iconWidth, iconHeight, existingRects) {
+    const maxAttempts = 200;
     let attempts = 0;
+    const padding = 15;
+
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const centerX = viewportWidth / 2;
+    const centerY = viewportHeight;
+
+    // Calculate segment dimensions
+    const minRadius = segment.innerRadius * viewportWidth;
+    const maxRadius = segment.outerRadius * viewportWidth;
+    const radiusRange = maxRadius - minRadius;
+
+    // Add bottom margin to prevent icons from touching the bottom
+    const bottomMargin = 50; // Adjust this value as needed
 
     while (attempts < maxAttempts) {
-        const x = padding + Math.random() * (maxWidth - 2 * padding);
-        const y = padding + Math.random() * (maxHeight - 2 * padding);
+        const section = attempts % 4;
+        const sectionAngle = Math.PI / 4;
+        const baseAngle = -Math.PI + (section * sectionAngle);
+        const angle = baseAngle + (Math.random() * sectionAngle);
 
-        const newRect = {
-            left: x,
-            top: y,
-            right: x + iconWidth,
-            bottom: y + iconHeight
-        };
+        const radiusOffset = (attempts % 5) / 5;
+        const radius = minRadius + (radiusOffset * radiusRange);
 
-        // Check for overlap with title and search bar
-        if (isPositionValid(newRect, existingRects) && !doRectanglesOverlap(newRect, getTitleRect()) && !doRectanglesOverlap(newRect, getSearchBarRect())) {
-            return { x, y, rect: newRect };
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius;
+
+        // Add stricter boundary checking, especially for bottom of screen
+        if (y < centerY && // Ensure icon is above the center point
+            x >= padding &&
+            x <= viewportWidth - (iconWidth + padding) &&
+            y >= padding &&
+            y <= viewportHeight - (iconHeight + padding + bottomMargin)) { // Added bottomMargin
+
+            const newRect = {
+                left: x - padding,
+                top: y - padding,
+                right: x + iconWidth + padding,
+                bottom: y + iconHeight + padding
+            };
+
+            if (isPositionValid(newRect, existingRects)) {
+                return { x, y, rect: newRect };
+            }
         }
 
         attempts++;
     }
 
-    // If we couldn't find a non-overlapping position after max attempts,
-    // return null to handle this case
+    return getFallbackPosition(segment, iconWidth, iconHeight, existingRects);
+}
+
+// Update getFallbackPosition to respect the same bottom margin
+function getFallbackPosition(segment, iconWidth, iconHeight, existingRects) {
+    const padding = 10;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const centerX = viewportWidth / 2;
+    const centerY = viewportHeight;
+    const bottomMargin = 50; // Same bottom margin as in getRandomPositionInArc
+
+    const minRadius = segment.innerRadius * viewportWidth;
+    const maxRadius = segment.outerRadius * viewportWidth;
+
+    // Try more angles and smaller radius steps
+    for (let angle = -Math.PI; angle <= 0; angle += Math.PI / 32) {
+        for (let radius = minRadius; radius <= maxRadius; radius += (iconHeight + padding) / 2) {
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+
+            if (y < centerY &&
+                x >= padding &&
+                x <= viewportWidth - (iconWidth + padding) &&
+                y >= padding &&
+                y <= viewportHeight - (iconHeight + padding + bottomMargin)) { // Added bottomMargin
+
+                const newRect = {
+                    left: x - padding,
+                    top: y - padding,
+                    right: x + iconWidth + padding,
+                    bottom: y + iconHeight + padding
+                };
+
+                if (isPositionValid(newRect, existingRects)) {
+                    return { x, y, rect: newRect };
+                }
+            }
+        }
+    }
+
+    // Last resort with minimal padding
+    const minPadding = 5;
+    for (let angle = -Math.PI; angle <= 0; angle += Math.PI / 48) {
+        for (let radius = minRadius; radius <= maxRadius; radius += iconHeight / 2) {
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+
+            if (y < centerY &&
+                x >= minPadding &&
+                x <= viewportWidth - (iconWidth + minPadding) &&
+                y >= minPadding &&
+                y <= viewportHeight - (iconHeight + minPadding + bottomMargin)) { // Added bottomMargin
+
+                const newRect = {
+                    left: x - minPadding,
+                    top: y - minPadding,
+                    right: x + iconWidth + minPadding,
+                    bottom: y + iconHeight + minPadding
+                };
+
+                if (isPositionValid(newRect, existingRects)) {
+                    return { x, y, rect: newRect };
+                }
+            }
+        }
+    }
+
     return null;
 }
 
-// Function to get rectangle for the search bar
-function getSearchBarRect() {
-    const searchContainer = document.querySelector('.search-container');
-    const rect = searchContainer.getBoundingClientRect();
-    return {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom
-    };
-}
+function createIcon(item, type, existingRects, segment) {
+    // Calculate total connections (both incoming and outgoing)
+    let connectionCount = 0;
 
-function createIcon(item, type, existingRects) {
+    // Count outgoing connections
+    if (connections[item] && connections[item].connections) {
+        connectionCount += connections[item].connections.length;
+    }
+
+    // Count incoming connections
+    Object.entries(connections).forEach(([source, data]) => {
+        if (data.connections) {
+            data.connections.forEach(connection => {
+                if (connection.target === item) {
+                    connectionCount++;
+                }
+            });
+        }
+    });
+
     const wrapper = document.createElement('div');
     wrapper.className = 'icon-wrapper';
 
     const icon = document.createElement('img');
     icon.className = 'icon';
-    
+
+    // Calculate scale dynamically based on connection count
+    const maxConnections = 10; // Adjust this based on your typical max connections
+    const minScale = 0.6;
+    const maxScale = 1.2;
+    const scaleRange = maxScale - minScale;
+
+    // Calculate scale linearly between min and max based on connection count
+    let scale = minScale + (scaleRange * Math.min(connectionCount / maxConnections, 1));
+
+    // Ensure scale stays within bounds
+    scale = Math.max(minScale, Math.min(maxScale, scale));
+
+    icon.style.transform = `scale(${scale})`;
+
+    // Add data attribute for connection count
+    wrapper.dataset.connections = connectionCount;
+
     // Add specific classes based on icon name/type
     if (item.includes('Vecihi')) {
         if (type === 'project') {
@@ -481,8 +700,8 @@ function createIcon(item, type, existingRects) {
     } else if (item === 'Haluk Bayraktar') {
         icon.classList.add('icon-haluk');
     }
-    
-    switch(type) {
+
+    switch (type) {
         case 'institution':
             icon.src = 'assets/inst.svg';
             break;
@@ -493,27 +712,31 @@ function createIcon(item, type, existingRects) {
             icon.src = 'assets/prjct.svg';
             break;
     }
-    
+
     icon.alt = item;
 
     const name = document.createElement('div');
     name.className = 'icon-name';
     name.textContent = item;
 
+    // Adjust name font size based on connection count
+    if (connectionCount > 8) {
+        name.style.fontSize = '14px';
+        name.style.fontWeight = '600';
+    } else if (connectionCount > 4) {
+        name.style.fontSize = '13px';
+        name.style.fontWeight = '500';
+    }
+
     wrapper.appendChild(icon);
     wrapper.appendChild(name);
 
-    // Estimate the space needed for the icon and name
-    const iconWidth = 50; // Icon width from CSS
-    const iconHeight = 100; // Icon height + space for name
+    // Adjust icon dimensions based on scale
+    const iconWidth = 60 * scale;
+    const iconHeight = 80 * scale;
 
-    const position = getRandomPosition(
-        window.innerWidth,
-        window.innerHeight,
-        iconWidth,
-        iconHeight,
-        existingRects
-    );
+    // Get position within the correct arc segment
+    const position = getRandomPositionInArc(segment, iconWidth, iconHeight, existingRects);
 
     if (position) {
         wrapper.style.left = `${position.x}px`;
@@ -536,7 +759,7 @@ function createIcon(item, type, existingRects) {
             if (toElement && toElement.classList.contains('connection-line')) {
                 return; // Don't remove connections if hovering over a line
             }
-            
+
             // Check if mouse is over any connection line
             const isOverConnection = document.elementFromPoint(event.clientX, event.clientY)?.classList.contains('connection-line');
             if (isOverConnection) {
@@ -552,344 +775,6 @@ function createIcon(item, type, existingRects) {
     return null;
 }
 
-// Add this function to handle special positioning for Vecihi-related icons
-function createVecihiGroup(existingRects) {
-    const vecihiItems = [
-        { item: "Vecihi K-VI", type: "project" },
-        { item: "Vecihi XIV", type: "project" },
-        { item: "Vecihi Civil Aviation School", type: "institution" },
-        { item: "Vecihi Hürkuş", type: "person" }
-    ];
-
-    // Find a position for the group
-    const centerPosition = getRandomPosition(
-        window.innerWidth,
-        window.innerHeight,
-        100,  // Width for group
-        100,  // Height for group
-        existingRects
-    );
-
-    if (!centerPosition) return [];
-
-    const groupIcons = [];
-    const radius = 50; // Increased from 40 to 50 for more spacing
-    
-    // First create the three surrounding icons in a circle
-    for (let i = 0; i < 3; i++) {
-        const angle = ((2 * Math.PI) / 3) * i; // Distribute evenly in a circle
-        const x = centerPosition.x + radius * Math.cos(angle);
-        const y = centerPosition.y + radius * Math.sin(angle);
-
-        const rect = {
-            left: x,
-            top: y,
-            right: x + 40,
-            bottom: y + 55
-        };
-
-        if (isPositionValid(rect, existingRects)) {
-            const icon = createIcon(vecihiItems[i].item, vecihiItems[i].type, existingRects);
-            if (icon) {
-                icon.style.left = `${x}px`;
-                icon.style.top = `${y}px`;
-                // Make surrounding icons slightly bigger
-                icon.querySelector('.icon').style.width = '35px';   // Adjust width
-                icon.querySelector('.icon').style.height = '35px';  // Adjust height
-                icon.querySelector('.icon-name').style.fontSize = '10px';  // Adjust text size
-                icon.querySelector('.icon-name').style.maxWidth = '100px'; // Adjust text width
-                groupIcons.push(icon);
-                existingRects.push(rect);
-            }
-        }
-    }
-
-    // Then create Vecihi Hürkuş icon at the center
-    const centerIcon = createIcon(vecihiItems[3].item, vecihiItems[3].type, existingRects);
-    if (centerIcon) {
-        centerIcon.style.left = `${centerPosition.x}px`;
-        centerIcon.style.top = `${centerPosition.y}px`;
-        groupIcons.push(centerIcon);
-        existingRects.push({
-            left: centerPosition.x,
-            top: centerPosition.y,
-            right: centerPosition.x + 50,
-            bottom: centerPosition.y + 100
-        });
-    }
-
-    return groupIcons;
-}
-
-function createNuriGroup(existingRects) {
-    const nuriItems = [
-        { item: "Nu.D 36", type: "project" },
-        { item: "Nu.D 38", type: "project" },
-        { item: "Nu.D 40", type: "project" },
-        { item: "Nuri Demirağ Aircraft Factory", type: "institution" },
-        { item: "Nuri Demirağ Sky School", type: "institution" },
-        { item: "Mansur Azak", type: "person" },
-        { item: "Mehmet Kum", type: "person" },
-        { item: "Hami Özger", type: "person" },
-        { item: "Nuri Demirağ", type: "person" } // Center icon
-    ];
-
-    // Find a position for the group
-    const centerPosition = getRandomPosition(
-        window.innerWidth,
-        window.innerHeight,
-        200,  // Width for group
-        200,  // Height for group
-        existingRects
-    );
-
-    if (!centerPosition) return [];
-
-    const groupIcons = [];
-    const radius = 100; // Increased from 85 to 100 for more spacing
-    
-    // First create the eight surrounding icons in a circle
-    for (let i = 0; i < 8; i++) {
-        const angle = ((2 * Math.PI) / 8) * i + (Math.PI / 8); // Offset for better distribution
-        const x = centerPosition.x + radius * Math.cos(angle) - 12.5; // Adjust for icon width (25/2)
-        const y = centerPosition.y + radius * Math.sin(angle) - 12.5; // Adjust for icon height (25/2)
-
-        const rect = {
-            left: x,
-            top: y,
-            right: x + 40,
-            bottom: y + 55
-        };
-
-        if (isPositionValid(rect, existingRects)) {
-            const icon = createIcon(nuriItems[i].item, nuriItems[i].type, existingRects);
-            if (icon) {
-                icon.style.left = `${x}px`;
-                icon.style.top = `${y}px`;
-                // Make surrounding icons slightly bigger
-                icon.querySelector('.icon').style.width = '35px';  // Increased from 25px
-                icon.querySelector('.icon').style.height = '35px'; // Increased from 25px
-                icon.querySelector('.icon-name').style.fontSize = '10px'; // Increased from 8px
-                icon.querySelector('.icon-name').style.maxWidth = '100px'; // Increased from 80px
-                groupIcons.push(icon);
-                existingRects.push(rect);
-            }
-        }
-    }
-
-    // Then create Nuri Demirağ icon at the center
-    const centerIcon = createIcon(nuriItems[8].item, nuriItems[8].type, existingRects);
-    if (centerIcon) {
-        // Adjust center position to account for icon dimensions
-        centerIcon.style.left = `${centerPosition.x - 25}px`; // Center horizontally (50/2)
-        centerIcon.style.top = `${centerPosition.y - 25}px`;  // Center vertically (50/2)
-        groupIcons.push(centerIcon);
-        existingRects.push({
-            left: centerPosition.x - 25,
-            top: centerPosition.y - 25,
-            right: centerPosition.x + 25,
-            bottom: centerPosition.y + 75
-        });
-    }
-
-    return groupIcons;
-}
-
-function createTHKGroup(existingRects) {
-    const thkItems = [
-        { item: "T.H.K - 1", type: "project" },
-        { item: "T.H.K - 2", type: "project" },
-        { item: "T.H.K - 3", type: "project" },
-        { item: "T.H.K - 4", type: "project" },
-        { item: "T.H.K - 5", type: "project" },
-        { item: "T.H.K - 7", type: "project" },
-        { item: "T.H.K - 9", type: "project" },
-        { item: "T.H.K - 10", type: "project" },
-        { item: "T.H.K - 11", type: "project" },
-        { item: "T.H.K - 12", type: "project" },
-        { item: "T.H.K - 13", type: "project" },
-        { item: "T.H.K - 14", type: "project" },
-        { item: "T.H.K - 15", type: "project" },
-        { item: "T.H.K - 16", type: "project" },
-        { item: "Turkish Aeronautical Association", type: "institution" },
-        { item: "Etimesgut Aircraft Factory", type: "institution" }
-    ];
-
-    // Find a position for the group
-    const centerPosition = getRandomPosition(
-        window.innerWidth,
-        window.innerHeight,
-        250,
-        250,
-        existingRects
-    );
-
-    if (!centerPosition) return [];
-
-    const groupIcons = [];
-    const radius = 130; // Increased from 110 to 130 for more spacing
-    
-    // First create the surrounding project icons in a circle
-    for (let i = 0; i < 14; i++) {
-        const angle = ((2 * Math.PI) / 14) * i;
-        const x = centerPosition.x + radius * Math.cos(angle) - 12.5;
-        const y = centerPosition.y + radius * Math.sin(angle) - 12.5;
-
-        const rect = {
-            left: x,
-            top: y,
-            right: x + 40,
-            bottom: y + 55
-        };
-
-        if (isPositionValid(rect, existingRects)) {
-            const icon = createIcon(thkItems[i].item, thkItems[i].type, existingRects);
-            if (icon) {
-                icon.style.left = `${x}px`;
-                icon.style.top = `${y}px`;
-                // Make surrounding icons slightly bigger
-                icon.querySelector('.icon').style.width = '35px';  // Increased from 25px
-                icon.querySelector('.icon').style.height = '35px'; // Increased from 25px
-                icon.querySelector('.icon-name').style.fontSize = '10px'; // Increased from 8px
-                icon.querySelector('.icon-name').style.maxWidth = '100px'; // Increased from 80px
-                groupIcons.push(icon);
-                existingRects.push(rect);
-            }
-        }
-    }
-
-    // Create the two center icons side by side
-    const centerSpacing = 40; // Space between center icons
-    
-    // Turkish Aeronautical Association (left of center)
-    const centerIcon1 = createIcon(thkItems[14].item, thkItems[14].type, existingRects);
-    if (centerIcon1) {
-        centerIcon1.style.left = `${centerPosition.x - 25 - centerSpacing}px`;
-        centerIcon1.style.top = `${centerPosition.y - 25}px`;
-        groupIcons.push(centerIcon1);
-        existingRects.push({
-            left: centerPosition.x - 25 - centerSpacing,
-            top: centerPosition.y - 25,
-            right: centerPosition.x + 25 - centerSpacing,
-            bottom: centerPosition.y + 75
-        });
-    }
-
-    // Etimesgut Aircraft Factory (right of center)
-    const centerIcon2 = createIcon(thkItems[15].item, thkItems[15].type, existingRects);
-    if (centerIcon2) {
-        centerIcon2.style.left = `${centerPosition.x - 25 + centerSpacing}px`;
-        centerIcon2.style.top = `${centerPosition.y - 25}px`;
-        groupIcons.push(centerIcon2);
-        existingRects.push({
-            left: centerPosition.x - 25 + centerSpacing,
-            top: centerPosition.y - 25,
-            right: centerPosition.x + 25 + centerSpacing,
-            bottom: centerPosition.y + 75
-        });
-    }
-
-    return groupIcons;
-}
-
-function createKayseriGroup(existingRects) {
-    const kayseriItems = [
-        { item: "Curtiss Aeroplane and Motor Company", type: "institution" },
-        { item: "Gothaer Wagonfabrik A.G.", type: "institution" },
-        { item: "Panstwowe Zaklady Lotnicze", type: "institution" },
-        { item: "Philips and Powis Aircraft Ltd.", type: "institution" },
-        { item: "Kayseri Aircraft Factory", type: "institution" } // Center icon
-    ];
-
-    // Find a position for the group
-    const centerPosition = getRandomPosition(
-        window.innerWidth,
-        window.innerHeight,
-        200,  // Width for group
-        200,  // Height for group
-        existingRects
-    );
-
-    if (!centerPosition) return [];
-
-    const groupIcons = [];
-    const radius = 85; // Increased from 70 to 85 for more spacing
-    
-    // First create the four surrounding icons in a circle
-    for (let i = 0; i < 4; i++) {
-        const angle = ((2 * Math.PI) / 4) * i + (Math.PI / 4); // Start from 45 degrees
-        const x = centerPosition.x + radius * Math.cos(angle) - 12.5;
-        const y = centerPosition.y + radius * Math.sin(angle) - 12.5;
-
-        const rect = {
-            left: x,
-            top: y,
-            right: x + 40,
-            bottom: y + 55
-        };
-
-        if (isPositionValid(rect, existingRects)) {
-            const icon = createIcon(kayseriItems[i].item, kayseriItems[i].type, existingRects);
-            if (icon) {
-                icon.style.left = `${x}px`;
-                icon.style.top = `${y}px`;
-                // Make surrounding icons slightly bigger
-                icon.querySelector('.icon').style.width = '35px';  // Increased from 25px
-                icon.querySelector('.icon').style.height = '35px'; // Increased from 25px
-                icon.querySelector('.icon-name').style.fontSize = '10px'; // Increased from 8px
-                icon.querySelector('.icon-name').style.maxWidth = '100px'; // Increased from 80px
-                groupIcons.push(icon);
-                existingRects.push(rect);
-            }
-        }
-    }
-
-    // Then create Kayseri Aircraft Factory icon at the center
-    const centerIcon = createIcon(kayseriItems[4].item, kayseriItems[4].type, existingRects);
-    if (centerIcon) {
-        centerIcon.style.left = `${centerPosition.x - 25}px`;
-        centerIcon.style.top = `${centerPosition.y - 25}px`;
-        groupIcons.push(centerIcon);
-        existingRects.push({
-            left: centerPosition.x - 25,
-            top: centerPosition.y - 25,
-            right: centerPosition.x + 25,
-            bottom: centerPosition.y + 75
-        });
-    }
-
-    return groupIcons;
-}
-
-// Update the initializeIcons function
-function initializeIcons() {
-    const container = document.getElementById('icons-container');
-    container.innerHTML = '';
-    
-    const existingRects = [];
-
-    // Combine all items into one array
-    const allItems = [
-        ...institutions.map(item => ({ item, type: 'institution' })),
-        ...people.map(item => ({ item, type: 'person' })),
-        ...projects.map(item => ({ item, type: 'project' }))
-    ];
-
-    // Shuffle the array for random placement
-    for (let i = allItems.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
-    }
-
-    // Place all icons randomly
-    allItems.forEach(({ item, type }) => {
-        const iconElement = createIcon(item, type, existingRects);
-        if (iconElement) {
-            container.appendChild(iconElement);
-        }
-    });
-}
-
 // Animation loop
 function animate() {
     drawArcs();
@@ -901,9 +786,9 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     initializeSearch();
     drawArcs(); // Draw immediately
-    
+
     setTimeout(() => {
-        initializeIcons();
+        distributeIcons();
         animate();
     }, 100);
 });
@@ -914,7 +799,7 @@ window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
         resizeCanvas();
-        initializeIcons();
+        distributeIcons();
     }, 250);
 });
 
@@ -924,7 +809,7 @@ function initializeSearch() {
     const searchInput = document.querySelector('.search-input');
     const searchResults = document.querySelector('.search-results');
     const chevronIcon = document.querySelector('.chevron-icon');
-    
+
     // Combine all items into one array with their types
     const allItems = [
         ...institutions.map(item => ({ name: item, type: 'institution' })),
@@ -954,7 +839,7 @@ function initializeSearch() {
     // Handle search input
     searchInput.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
-        const filteredItems = allItems.filter(item => 
+        const filteredItems = allItems.filter(item =>
             item.name.toLowerCase().includes(searchTerm) ||
             item.type.toLowerCase().includes(searchTerm)
         );
@@ -963,8 +848,8 @@ function initializeSearch() {
 
     // Close results when clicking outside
     document.addEventListener('click', (e) => {
-        if (!searchInput.contains(e.target) && 
-            !searchResults.contains(e.target) && 
+        if (!searchInput.contains(e.target) &&
+            !searchResults.contains(e.target) &&
             !chevronIcon.contains(e.target)) {
             searchResults.classList.remove('show');
             chevronIcon.style.transform = 'rotate(0deg)';
@@ -974,12 +859,12 @@ function initializeSearch() {
 
 function displayResults(items, container) {
     container.innerHTML = '';
-    
+
     // Calculate the height based on number of items (max 6 items)
     const itemHeight = 13 + 12 * 2; // font-size + padding
     const numItems = Math.min(items.length, 6); // Cap at 6 items
     const height = numItems * itemHeight;
-    
+
     // Set the container height
     container.style.height = items.length > 0 ? `${height}px` : `${itemHeight}px`;
 
@@ -987,16 +872,16 @@ function displayResults(items, container) {
         const div = document.createElement('div');
         div.className = 'search-item';
         div.textContent = item.name;
-        
+
         // Hover effect
         div.addEventListener('mouseenter', () => highlightIcon(item.name));
         div.addEventListener('mouseleave', () => resetIcons());
-        
+
         // Click effect
         div.addEventListener('click', () => {
             selectIcon(item.name);
         });
-        
+
         container.appendChild(div);
     });
 }
@@ -1035,10 +920,10 @@ function resetIcons() {
 function createPopup(title, content) {
     const overlay = document.createElement('div');
     overlay.className = 'popup-overlay';
-    
+
     const popupContent = document.createElement('div');
     popupContent.className = 'popup-content';
-    
+
     // Check if content exists; if not, use the default message
     const displayContent = content ? content : "Pretend nothing happened, proceed to touch and go to the other icons.🛫";
 
@@ -1048,9 +933,9 @@ function createPopup(title, content) {
             <button class="popup-close">×</button>
         </div>
         <div class="popup-body">
-            ${displayContent.split('\n').map(para => 
-                para ? `<p>${para}</p>` : '<br>'
-            ).join('')}
+            ${displayContent.split('\n').map(para =>
+        para ? `<p>${para}</p>` : '<br>'
+    ).join('')}
         </div>
     `;
 
@@ -1060,7 +945,7 @@ function createPopup(title, content) {
     // Add event listeners
     const closeBtn = popupContent.querySelector('.popup-close');
     closeBtn.addEventListener('click', () => closePopup(overlay));
-    
+
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) {
             closePopup(overlay);
@@ -1085,7 +970,7 @@ function closePopup(overlay) {
 function drawConnection(source, target, color = '#3CDE00') {
     const sourceIcon = document.querySelector(`.icon-wrapper:has([alt="${source}"])`);
     const targetIcon = document.querySelector(`.icon-wrapper:has([alt="${target}"])`);
-    
+
     if (!sourceIcon || !targetIcon) return null;
 
     const sourceRect = sourceIcon.getBoundingClientRect();
@@ -1093,7 +978,7 @@ function drawConnection(source, target, color = '#3CDE00') {
 
     const line = document.createElement('div');
     line.className = 'connection-line';
-    
+
     // Set the line height to 1px for all connections
     line.style.height = '3px'; // Changed from 2px to 1px
 
@@ -1146,7 +1031,7 @@ function showConnections(item) {
     resetConnections();
 
     const connectedIcons = new Set();
-    
+
     // Add the source icon to connected set
     const sourceIcon = document.querySelector(`.icon-wrapper:has([alt="${item}"])`);
     if (sourceIcon) {
@@ -1188,40 +1073,23 @@ function showConnections(item) {
     });
 }
 
-function distributeIconsRandomly() {
-    const icons = document.querySelectorAll('.icon-wrapper');
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-
-    icons.forEach(icon => {
-        // Generate random positions within the screen bounds
-        const randomX = Math.random() * (screenWidth - icon.offsetWidth);
-        const randomY = Math.random() * (screenHeight - icon.offsetHeight);
-
-        // Set the new position
-        icon.style.position = 'absolute';
-        icon.style.left = `${randomX}px`;
-        icon.style.top = `${randomY}px`;
-    });
-}
-
 // Call this function when you want to distribute the icons
-distributeIconsRandomly();
+// distributeIconsRandomly();
 
 document.querySelectorAll('.connection-line').forEach(line => {
-    line.addEventListener('mouseenter', function() {
+    line.addEventListener('mouseenter', function () {
         // Show the label for the connected icon
         document.getElementById('labelIsmet').style.display = 'block';
     });
 
-    line.addEventListener('mouseleave', function() {
+    line.addEventListener('mouseleave', function () {
         // Hide the label for the connected icon
         document.getElementById('labelIsmet').style.display = 'none';
     });
 });
 
 document.querySelectorAll('.search-item').forEach(item => {
-    item.addEventListener('mouseenter', function() {
+    item.addEventListener('mouseenter', function () {
         const iconName = this.textContent.trim();
         const icon = document.querySelector(`.icon-wrapper:has([alt="${iconName}"])`);
 
@@ -1238,7 +1106,7 @@ document.querySelectorAll('.search-item').forEach(item => {
         }
     });
 
-    item.addEventListener('mouseleave', function() {
+    item.addEventListener('mouseleave', function () {
         // Remove highlight and dim classes
         document.querySelectorAll('.icon-wrapper').forEach(icon => {
             icon.classList.remove('icon-highlighted');
@@ -1268,3 +1136,26 @@ function resetConnections() {
         icon.classList.remove('dimmed');
     });
 }
+
+// Add this at the beginning of your script.js
+function checkMobile() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+
+    const mobileMessage = document.getElementById('mobileMessage');
+    const mainContent = document.getElementById('mainContent');
+
+    if (isMobileDevice) {
+        mobileMessage.style.display = 'block';
+        mainContent.style.display = 'none';
+    } else {
+        mobileMessage.style.display = 'none';
+        mainContent.style.display = 'block';
+    }
+}
+
+// Call checkMobile when the page loads
+window.addEventListener('load', checkMobile);
+
+// Optional: Check again if window is resized
+window.addEventListener('resize', checkMobile);

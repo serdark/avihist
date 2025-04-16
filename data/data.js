@@ -50,7 +50,7 @@ In January 1945, Nuri Demirağ left his business to enter politics, leading to t
     "Turkish Air Force": `1911
 
 No one has landed here yet. Continue to touch and go.`,
-    
+
     // Projects
     "Nu.D 36": `<span class="popup-year">1936</span>
 
@@ -247,47 +247,49 @@ Between 1947 and 1949, the factory also serviced and revised 263 aircraft for th
 
 In 1951, the factory was transferred to the Machinery and Chemical Industry Corporation, marking the end of aircraft production at the site. The factory now manufactures weaving machines.`,
 
-    "T.H.K - 5": `1945
+    "T.H.K - 5": `<span class="popup-year">1945</span>
     
     This is a single-engine medical transport aircraft capable of carrying two patients, one doctor, and two pilots. It was the first aircraft model in Turkey to be certified, produced, and sold abroad.
 
 Flown by Emrullah Ali Yıldız, the aircraft was showcased at the Paris Air Show in 1949 and received an order from Denmark. For the Danish company Falcks, which provides air ambulance services, an aircraft with registration OY-ACK was manufactured in 1951 and intensively used until 1960. Şükrü Er, the factory engineer at the time, along with Emrullah Ali Yıldız, confirmed that orders were also received from Denmark and Sweden, although the factory had ceased operations by then.`,
 
-    "T.H.K - 7": `1946
+    "T.H.K - 7": `<span class="popup-year">1946</span>
     
     A single-seat advanced training glider, manufactured for the Turkish Bird.`,
 
-    "T.H.K - 9": `1946
+    "T.H.K - 9": `<span class="popup-year">1946</span>
     
     A two-seat training glider, manufactured for the Turkish Bird.`,
 
-    "T.H.K - 10": `1946
+    "T.H.K - 10": `<span class="popup-year">1946</span>
     
     A light transport aircraft with a chip engine, three units were manufactured, and some were modified to the THK.5A type.`,
 
-    "T.H.K - 11": `1947
+    "T.H.K - 11": `<span class="popup-year">1947</span>
     
     An original single-engine, high-wing, nose-wheel aircraft with a pusher propeller, designed as a four-seat tourism aircraft. Only one unit was produced, and it faced cooling issues due to the rear-mounted engine.`,
 
-    "T.H.K - 12": `1946
+    "T.H.K - 12": `<span class="popup-year">1946</span>
     
     A twelve-passenger, chip-engine passenger aircraft. The design was completed, but it never proceeded to production.`,
 
-    "T.H.K - 13": `1948
+    "T.H.K - 13": `<span class="popup-year">1948</span>
     
     A single-seat Flying Wing Glider, an original design likely conceived for the first time worldwide, showcased at the Paris Aviation Exhibition and received significant interest. Later, the French designed a motorized version of it.`,
 
-    "T.H.K - 14": `A two-seat primary training glider. The design was completed, but it never proceeded to production.`,
+    "T.H.K - 14": `<span class="popup-year">1948</span>
+    
+    A two-seat primary training glider. The design was completed, but it never proceeded to production.`,
 
-    "T.H.K - 15": `1949
+    "T.H.K - 15": `<span class="popup-year">1949</span>
     
     (Uğur Type) A two-seat metal-bodied initial training aircraft. Produced in significant quantities and used by our Air Forces until recently.`,
 
-    "T.H.K - 16": `1949
+    "T.H.K - 16": `<span class="popup-year">1949</span>
     
     A two-seat metal-bodied initial training jet aircraft, which remained a project stage.`,
 
-    "T.H.K - 2": `1946
+    "T.H.K - 2": `<span class="popup-year">1946</span>
     
     A single-seat acrobatic training aircraft. Twelve units were produced.`,
 
@@ -339,19 +341,19 @@ The T129 ATAK is a twin-engine, tandem-seat, multi-role attack helicopter develo
 
 Turkish Aerospace was incepted under the Ministry of Industry and Technology`,
 
-    "TEI": `1985
+    "TEI": `<span class="popup-year">1985</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "TCI": `2011
+    "TCI": `<span class="popup-year">2011</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Airbus": `1970
+    "Airbus": `<span class="popup-year">1970</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Sikorsky": `1923
+    "Sikorsky": `<span class="popup-year">1923</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
@@ -359,7 +361,7 @@ Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
 ASELSAN, established in 1975, is a prominent Turkish defense electronics company`,
 
-    "Turkish Airlines": `1975
+    "Turkish Airlines": `<span class="popup-year">1975</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
@@ -380,49 +382,49 @@ Boeing, founded in 1916 by William E. Boeing`,
 
 ATR (Avions de Transport Régional) was established in 1981`,
 
-    "Baykar": `1986
+    "Baykar": `<span class="popup-year">1986</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Havelsan": `1986
+    "Havelsan": `<span class="popup-year">1986</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
 
-    "TAI": `1987
+    "TAI": `<span class="popup-year">1987</span>
 
 Turkish Aerospace was incepted under the Ministry of Industry and Technology`,
     // Additional Projects
-    "Anka": `1999
+    "Anka": `<span class="popup-year">1999</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Anka-3": `2019
+    "Anka-3": `<span class="popup-year">2019</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
 
-    "Akıncı": `2019
+    "Akıncı": `<span class="popup-year">2019</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Aksungur": `2019
+    "Aksungur": `<span class="popup-year">2019</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Boeing 737 AEW&C": `2004
+    "Boeing 737 AEW&C": `<span class="popup-year">2004</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "CN-235": `2002
+    "CN-235": `<span class="popup-year">2002</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "C130": `2006
+    "C130": `<span class="popup-year">2006</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "T-38": `2007
+    "T-38": `<span class="popup-year">2007</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
@@ -438,62 +440,62 @@ The Bayraktar TB2, developed by Baykar, is a tactical unmanned aerial vehicle`,
 
 The Bayraktar TB3 is an armed unmanned aerial vehicle`,
 
-    "F-16": `1987
+    "F-16": `<span class="popup-year">1987</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "T70": `1999
+    "T70": `<span class="popup-year">1999</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "TCG Anadolu": `2018
+    "TCG Anadolu": `<span class="popup-year">2018</span>
 
 Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Turkish Navy": `1923
+    "Turkish Navy": `<span class="popup-year">1923</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Ukraine": `19xx
+    "Ukraine": `<span class="popup-year">1991</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Azerbaijan": `1923
+    "Azerbaijan": `<span class="popup-year">1923</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "EASA (European Aviation Safety Agency)": `19xx
+    "EASA (European Aviation Safety Agency)": `<span class="popup-year">2002</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
     "Murat Özpala": `<span class="popup-year">1971, İzmir</span>
 
     Murat Özpala is a distinguished Turkish test pilot`,
 
-    "GE Aerospace": `1996
+    "GE Aerospace": `<span class="popup-year">1996</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Spain": `19xx
+    "Spain": `<span class="popup-year">1492</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Meteksan": `2006
+    "Meteksan": `<span class="popup-year">2006</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "TRMOTOR": `2018
+    "TRMOTOR": `<span class="popup-year">2018</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Ord.Prof.Dr. Ali Yar": `1884
+    "Ord.Prof.Dr. Ali Yar": `<span class="popup-year">1884</span>
 
-    Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
+Pretend nothing happened, proceed to touch and go to the other icons.🛫`,
 
-    "Ercan Çelik": `19xx
+    "Ercan Çelik": `<span class="popup-year">1965</span>
 
     Ercan Çelik has logged over 3,000 flight hours on the F-16 since 1994. During his service with the Turkish Air Force, he served in various squadrons and participated in NATO's operations in Bosnia-Herzegovina, where he set a record by remaining airborne for seven and a half hours. His last role in the Air Force was as an instructor pilot in the "Öncel" squadron at Akıncı Air Base, specializing in F-16 training.
 
 In 2008, Çelik joined Turkish Aerospace Industries (TAI), where he conducted test flights for upgraded F-16 aircraft belonging to the Jordanian, Pakistani, and Turkish Air Forces. He currently contributing to test flights and aviation development projects, including the TAI Hürjet.`,
-    
+
 }; 
